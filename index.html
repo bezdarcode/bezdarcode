@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BezdarCode</title>
+
+<!-- Иконки -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+/* СНЕГ */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* СЕКЦИИ */
+.section {
+  padding: 60px 20px;
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px white;
+}
+
+.list {
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.list div {
+  margin: 14px 0;
+  font-size: 16px;
+}
+
+.list i {
+  margin-right: 10px;
+}
+
+/* НАВЫКИ */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.skill {
+  background: #111;
+  border: 1px solid #333;
+  padding: 10px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ПРОЕКТЫ */
+.projects {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.projects div {
+  margin: 14px 0;
+}
+
+/* НИЗ */
+.footer {
+  margin: 60px 0;
+  font-size: 22px;
+  text-shadow: 0 0 15px gold;
+}
+
+/* АДАПТАЦИЯ */
+@media (max-width: 480px) {
+  .title {
+    font-size: 30px;
+  }
+}
+</style>
+</head>
+<body>
+
+<canvas id="snow"></canvas>
+
+<!-- РАЗРАБОТКА -->
+<div class="section">
+  <div class="title">Разработка</div>
+  <div class="list">
+    <div><i class="fa-solid fa-palette"></i>Сайт-биография со стилями.</div>
+    <div><i class="fa-solid fa-robot"></i>Telegram Бот под любую сложность.</div>
+    <div><i class="fa-solid fa-gamepad"></i>Читы для PUBGm/Standoff.</div>
+    <div><i class="fa-solid fa-feather"></i>Данный список буду пополнять.</div>
+  </div>
+</div>
+
+<!-- НАВЫКИ -->
+<div class="section">
+  <div class="title">Навыки</div>
+  <div class="skills">
+    <div class="skill"><i class="fa-solid fa-c"></i>C++</div>
+    <div class="skill"><i class="fa-brands fa-js"></i>JavaScript</div>
+    <div class="skill"><i class="fa-brands fa-php"></i>PHP</div>
+    <div class="skill"><i class="fa-brands fa-css3-alt"></i>CSS</div>
+    <div class="skill"><i class="fa-brands fa-android"></i>Android Studio</div>
+  </div>
+</div>
+
+<!-- ПРОЕКТЫ -->
+<div class="section">
+  <div class="title">Проекты</div>
+  <div class="projects">
+    <div><i class="fa-regular fa-folder"></i> KMERIX | CONFIGS</div>
+    <div><i class="fa-solid fa-terminal"></i> WEEK | CONFIG</div>
+  </div>
+</div>
+
+<!-- НИЗ -->
+<div class="footer">
+  🎄 С новым годом 🎉
+</div>
+
+<script>
+/* СНЕГ */
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let snowflakes = [];
+
+for (let i = 0; i < 120; i++) {
+  snowflakes.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 3 + 1,
+    d: Math.random() + 1
+  });
+}
+
+function drawSnow() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  ctx.beginPath();
+  for (let i = 0; i < snowflakes.length; i++) {
+    let f = snowflakes[i];
+    ctx.moveTo(f.x, f.y);
+    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+  }
+  ctx.fill();
+  moveSnow();
+}
+
+function moveSnow() {
+  for (let i = 0; i < snowflakes.length; i++) {
+    let f = snowflakes[i];
+    f.y += Math.pow(f.d, 2) + 1;
+    if (f.y > canvas.height) {
+      snowflakes[i] = {
+        x: Math.random() * canvas.width,
+        y: 0,
+        r: f.r,
+        d: f.d
+      };
+    }
+  }
+}
+
+setInterval(drawSnow, 33);
+
+window.onresize = () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+};
+</script>
+
+</body>
+</html>
